@@ -73,7 +73,7 @@ class AwaitResponse(GameState):
         word = self.hangman_state.format_word()
         letters = self.hangman_state.format_letters()
         if letters:
-            await channel.send(f"{word}    ~~{letters}~~")
+            await channel.send(f"{word}{8*' '}~~{letters}~~")
         else:
             await channel.send(word)
         return AwaitResponse(self.hangman_state), 'break'
