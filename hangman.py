@@ -71,7 +71,8 @@ class AwaitResponse(GameState):
 
     async def run(self, channel):
         word = self.hangman_state.format_word()
-        await channel.send(word)
+        letters = self.hangman_state.format_letters()
+        await channel.send(f"{word} <> ~~{letters})
         return AwaitResponse(self.hangman_state), 'break'
 
     async def next(self, input_value):
@@ -114,6 +115,9 @@ class Hangman:
 
     def format_word(self):
         return ' '.join([c if c in self.letters_guessed else '\_' for c in self.word])
+
+    def format_letters(self):
+        return ' '.join(self.letters_guessed)
 
     def generate_word(self):
         r = requests.get("https://www.wordgenerator.net/application/p.php?id=dictionary_words&type=2&spaceflag=false")
