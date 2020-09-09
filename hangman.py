@@ -113,7 +113,7 @@ class Hangman:
         self.word, self.definition = self.generate_word()
         self.num_guesses = 0
         self.num_errors = 0
-        self.max_errors = 6
+        self.max_errors = 7
         self.letters_guessed = {' '}
         self.false_letters = set()
 
