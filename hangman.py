@@ -121,7 +121,7 @@ class Hangman:
         return ' '.join([c if c in self.letters_guessed else '\_' for c in self.word])
 
     def format_letters(self):
-        return ' '.join(self.false_letters)
+        return ' '.join(sorted(self.false_letters))
 
     def generate_word(self):
         r = requests.get("https://www.wordgenerator.net/application/p.php?id=dictionary_words&type=2&spaceflag=false")
