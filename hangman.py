@@ -72,7 +72,10 @@ class AwaitResponse(GameState):
     async def run(self, channel):
         word = self.hangman_state.format_word()
         letters = self.hangman_state.format_letters()
-        await channel.send(f"{word}    ~~{letters}~~")
+        if letters:
+            await channel.send(f"{word}    ~~{letters}~~")
+        else:
+            await channel.send(word)
         return AwaitResponse(self.hangman_state), 'break'
 
     async def next(self, input_value):
@@ -112,7 +115,7 @@ class Hangman:
         self.num_errors = 0
         self.max_errors = 6
         self.letters_guessed = {' '}
-        self.false_letters = {}
+        self.false_letters = set()
 
     def format_word(self):
         return ' '.join([c if c in self.letters_guessed else '\_' for c in self.word])
@@ -142,7 +145,8 @@ class Hangman:
             return True
         else:
             self.num_errors += 1
-            self.false_letters.add(letter)
+            if letter not in self.letters_guessed:
+                self.false_letters.add(letter)
             return False
 
     def guess_word(self, word):
